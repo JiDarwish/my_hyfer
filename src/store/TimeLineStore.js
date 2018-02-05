@@ -4,9 +4,43 @@ import moment from 'moment';
 useStrict(true);
 const BASE_URL = 'http://localhost:3005';
 
-export default class TimeLineStore {
+export default class TimelineStore {
   @observable items = [];
   @observable groups = [];
+  @observable isModalOpen = false;
+
+  @action
+  handleToggleModal = () => {
+    this.isModalOpen = !this.isModalOpen;
+  };
+
+  @action
+  handleAddClass = (className, startingDate) => {
+    const body = {
+      group_name: className,
+      starting: startingDate
+    };
+
+    fetch(`${BASE_URL}/api/groups`, {
+      method: 'POST',
+      headers: {
+        'Conetent-Type': 'application/json'
+      },
+      body: JSON.stringify(body)
+    }).then(res => console.log(res));
+  };
+
+  @action
+  getItems = () => {
+    fetch(`${BASE_URL}/api/timeline`)
+      .then(res => res.json())
+      .then(resJson => {
+        runInAction(() => {
+          this.groups = this.extractGroups(resJson);
+          this.items = this.extractItems(resJson);
+        });
+      });
+  };
 
   extractGroups(data) {
     const allGroups = Object.keys(data).map(item => {
@@ -37,7 +71,6 @@ export default class TimeLineStore {
     });
     return this.manipulateItems(allItems);
   }
-
   manipulateItems = items => {
     return items.map(item => {
       return {
@@ -45,21 +78,9 @@ export default class TimeLineStore {
         end: moment(item.ending_date).format('YYYY-MM-DD'),
         content: item.module_name,
         group: item.group_name,
-        title: item.module_name.split(' ').join('_'),
-        className: item.module_name.split(' ').join('_')
+        className: item.module_name.split(' ').join('_'),
+        git_repo: item.git_repo // data attributes don't accept capital letters
       };
     });
-  };
-
-  @action
-  getItems = () => {
-    fetch(`${BASE_URL}/api/timeline`)
-      .then(res => res.json())
-      .then(resJson => {
-        runInAction(() => {
-          this.groups = this.extractGroups(resJson);
-          this.items = this.extractItems(resJson);
-        });
-      });
   };
 }

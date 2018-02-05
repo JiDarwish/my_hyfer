@@ -5,19 +5,22 @@ import ReactHtmlParser from 'react-html-parser';
 @inject('moduleInfoStore')
 @observer
 export default class ModuleInfo extends Component {
-  componentDidMount = () => {
+  sendRequestReadme = () => {
     this.props.moduleInfoStore.getInfo();
   };
 
   render() {
-    const info = this.props.moduleInfoStore.info;
-    if (info) {
-      return <div>{ReactHtmlParser(info)}</div>;
+    const { repoName, readme } = this.props.moduleInfoStore;
+    let content = '';
+    if (!repoName) {
+      content = <h1>select an item to view it's github readme</h1>;
+    } else if (repoName === 'NOREPO') {
+      content = <h1>This module has no github repositroy</h1>;
+    } else {
+      this.sendRequestReadme();
+      content = <div>{ReactHtmlParser(readme)}</div>;
     }
-    return (
-      <div>
-        <h1>HEY</h1>
-      </div>
-    );
+
+    return <div>{content}</div>;
   }
 }

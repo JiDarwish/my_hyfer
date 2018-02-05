@@ -1,5 +1,5 @@
-import TimeLineStore from './TimeLineStore';
+import TimelineStore from './TimeLineStore';
 import ModuleInfoStore from './ModuleInfoStore';
 
-export const timeLineStore = (window.timesLineStore = new TimeLineStore());
+export const timelineStore = (window.timelineStore = new TimelineStore());
 export const moduleInfoStore = (window.moduleInfoStore = new ModuleInfoStore());
