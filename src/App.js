@@ -1,17 +1,14 @@
 import React, { Component } from 'react';
 import { Provider } from 'mobx-react';
 import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
-import moment from 'moment';
 
-import { timelineStore, moduleInfoStore } from './store/index';
+import './assets/styles/app.css';
+import { timelineStore, moduleInfoStore } from './store/index'; // STORE YOUR STORES AROUND HERE
 import Header from './components/Header/Header';
 import TimeLine from './components/Timeline/TimeLine';
 import Footer from './components/Footer/Footer';
-import Modules from './components/Modules/Modules';
-import Users from './components/Users/Users';
-
-const date = new moment();
-console.log(date.toString());
+import Modules from './components/Modules/Modules'; // ADD YOURS HERE
+import Users from './components/Users/Users'; // ADD YOURS HERE
 
 class App extends Component {
   render() {
@@ -19,7 +16,7 @@ class App extends Component {
       <BrowserRouter>
         <React.Fragment>
           <Header />
-          <Provider
+          <Provider // ADD TOU NEEDED STORES HERE
             timelineStore={timelineStore}
             moduleInfoStore={moduleInfoStore}
           >

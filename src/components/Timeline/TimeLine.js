@@ -3,17 +3,18 @@ import { observer, inject } from 'mobx-react';
 import ComponentTimeLine from 'react-visjs-timeline';
 import Modal from 'react-responsive-modal';
 
-import ModuleInfo from './ModuleInfo';
+import styles from '../../assets/styles/timeline.css';
+import loader from '../../assets/images/loader.gif';
+import ModuleReadme from '../ModuleReadme/ModuleReadme';
 import Button from '../Helpers/Button/Button';
 import AddClassForm from '../AddClassForm/AddClassForm';
 
+console.log(styles.modalToggler);
 const options = {
   width: '100%',
   stack: false,
   showCurrentTime: true,
-  zoomMin: 1000000,
   dataAttributes: 'all'
-  // editable: true
 };
 
 @inject('timelineStore', 'moduleInfoStore')
@@ -27,14 +28,15 @@ export default class TimeLine extends Component {
     const { items, groups } = this.props.timelineStore;
     if (items.length !== 0) {
       return (
-        <div>
+        <main>
           <Button
             onClick={this.props.timelineStore.handleToggleModal}
-            className="modalToggeler button"
+            className={styles.modalToggler}
           >
             Add a class
           </Button>
           <Modal
+            classNames={{ modal: styles.modal }}
             open={this.props.timelineStore.isModalOpen}
             onClose={this.props.timelineStore.handleToggleModal}
           >
@@ -46,11 +48,11 @@ export default class TimeLine extends Component {
             options={options}
             groups={[...groups]}
           />
-          <ModuleInfo />
-        </div>
+          <ModuleReadme />
+        </main>
       );
     } else {
-      return <h1>Hey</h1>;
+      return <img src={loader} alt="loader icon" className={styles.loader} />;
     }
   }
 }

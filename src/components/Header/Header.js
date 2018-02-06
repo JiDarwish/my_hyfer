@@ -1,24 +1,40 @@
 import React, { Component } from 'react';
 import { NavLink } from 'react-router-dom';
 
+import hyfIcon from '../../assets/images/icon.png';
+import styles from '../../assets/styles/header.css';
+
 export default class Header extends Component {
   render() {
     return (
-      <header>
-        <img src="/TODO:" alt="HackYourFuture logo" />
-        <nav>
-          <ul>
+      <header className={styles.header}>
+        <a href="http://hackyourfuture.net/">
+          <img
+            src={hyfIcon}
+            alt="HackYourFuture logo"
+            className={styles.hyfIcon}
+          />
+        </a>
+        <nav className={styles.nav}>
+          <ul className={styles.list}>
             <li>
-              <NavLink to="/timeline">Timeline</NavLink>
+              <NavLink className={styles.item} to="/timeline">
+                Timeline
+              </NavLink>
             </li>
             <li>
-              <NavLink to="/modules">Modlues</NavLink>
+              <NavLink className={styles.item} to="/modules">
+                Modlues
+              </NavLink>
             </li>
             <li>
-              <NavLink to="/users">Users</NavLink>
+              <NavLink className={styles.item} to="/users">
+                Users
+              </NavLink>
             </li>
           </ul>
         </nav>
+        <img src="TODO:" alt="user icon" className={styles.userIcon} />
       </header>
     );
   }

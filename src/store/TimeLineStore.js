@@ -14,6 +14,7 @@ export default class TimelineStore {
     this.isModalOpen = !this.isModalOpen;
   };
 
+  // FIXME: NOT WORKING MAYBE API CONFIG THING
   @action
   handleAddClass = (className, startingDate) => {
     const body = {
@@ -69,10 +70,7 @@ export default class TimelineStore {
       });
       allItems = [...items, ...allItems];
     });
-    return this.manipulateItems(allItems);
-  }
-  manipulateItems = items => {
-    return items.map(item => {
+    return allItems.map(item => {
       return {
         start: moment(item.starting_date).format('YYYY-MM-DD'),
         end: moment(item.ending_date).format('YYYY-MM-DD'),
@@ -82,5 +80,5 @@ export default class TimelineStore {
         git_repo: item.git_repo // data attributes don't accept capital letters
       };
     });
-  };
+  }
 }
