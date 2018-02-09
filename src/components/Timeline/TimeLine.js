@@ -13,6 +13,7 @@ console.log(styles.modalToggler);
 const options = {
   width: '100%',
   stack: false,
+  editable: true,
   showCurrentTime: true,
   dataAttributes: 'all'
 };
